@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kr.co.hdtel.lifecycleproject.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +20,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setUpBinding()
         setUpObserve()
+
+        binding.flowBtn.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.triggerFlow().collectLatest {
+                    binding.flowTv.text = it
+                }
+            }
+        }
     }
 
     private fun setUpBinding() {
@@ -37,9 +45,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.stateFlow.collectLatest {
+            viewModel.stateFlow.collect {
                 binding.stateFlowTv.text = it
             }
+
+//            viewModel.sharedFlow.collectLatest {
+//                Snackbar.make(
+//                    binding.root,
+//                    it,
+//                    Snackbar.LENGTH_LONG
+//                ).show()
+//            }
         }
     }
 

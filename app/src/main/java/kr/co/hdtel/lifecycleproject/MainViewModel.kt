@@ -14,6 +14,7 @@ class MainViewModel: ViewModel() {
     private val _liveData = MutableLiveData("ANDROID")
     val liveData: LiveData<String> = _liveData
 
+
     private val _stateFlow = MutableStateFlow("ANDROID")
     val stateFlow = _stateFlow.asStateFlow()
 

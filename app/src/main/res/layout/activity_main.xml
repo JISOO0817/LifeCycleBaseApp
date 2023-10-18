@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/livedata_tv"
             android:layout_marginTop="10dp"
-            android:text="LiveData"
+            android:text="@{vm.stateFlow}"
             android:onClick="@{() -> vm.triggerLiveData()}"/>
 
         <TextView
